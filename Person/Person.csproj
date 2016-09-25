@@ -58,6 +58,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\PersonDB.mdf" />
+    <Content Include="App_Data\PersonDB_log.ldf">
+      <DependentUpon>PersonDB.mdf</DependentUpon>
+    </Content>
     <Content Include="Consultas\cPersonas.aspx" />
     <Content Include="Registros\rPersonas.aspx" />
     <Content Include="Web.config" />

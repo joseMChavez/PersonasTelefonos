@@ -7,24 +7,25 @@ using DAL;
 
 namespace BLL
 {
-    public class Personas : ClaseMaestra
+    public class Persona : ClaseMaestra
     {
         public int PersonaId { get; set; }
         public string Nombre { get; set; }
-
-        public List<PersonasTelefonos> Telefonos { get; set; }
+        public string Sexo { get; set; }
+        public List<PersonaTelefono> TelefonoLista { get; set; }
 
         ConexionDb conexion = new ConexionDb();
-        public Personas()
+        public Persona()
         {
             this.PersonaId = 0;
             this.Nombre = "";
-            Telefonos = new List<PersonasTelefonos>();
+            this.Sexo = "";
+            TelefonoLista = new List<PersonaTelefono>();
         }
 
         public void AgregarTelefono(string tipo, string telefono)
         {
-            Telefonos.Add(new PersonasTelefonos(tipo, telefono));
+            TelefonoLista.Add(new PersonaTelefono(tipo, telefono));
 
         }
 
@@ -36,14 +37,14 @@ namespace BLL
             {
                 //obtengo el identity insertado en la tabla personas
                 identity = conexion.ObtenerValor(
-                    string.Format("Insert Into Persona(Nombre) values('{0}') select @@Identity"
-                    , this.Nombre));
+                    string.Format("Insert Into Persona(Nombre,Sexo) values('{0}','{1}') select @@Identity"
+                    , this.Nombre, this.Sexo));
 
                 //intento convertirlo a entero
                 int.TryParse(identity.ToString(), out retorno);
 
                 this.PersonaId = retorno;
-                foreach (PersonasTelefonos item in this.Telefonos)
+                foreach (PersonaTelefono item in this.TelefonoLista)
                 {
                     conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')",
                         retorno, item.TipoTelefono, item.Telefono));
@@ -62,11 +63,11 @@ namespace BLL
             bool retorno = false;
             try
             {
-                retorno = conexion.Ejecutar(string.Format("Update Persona set Nombre= '{0}' where PersonaId=", this.Nombre, this.PersonaId));
+                retorno = conexion.Ejecutar(string.Format("Update Persona set Nombre= '{0}' Sexo= '{1}' where PersonaId=", this.Nombre, this.PersonaId));
                 if (retorno)
                 {
                     conexion.Ejecutar("Delete from PersonaTelefono Where PersonaId=" + this.PersonaId.ToString());
-                    foreach (PersonasTelefonos numero in this.Telefonos)
+                    foreach (PersonaTelefono numero in this.TelefonoLista)
                     {
                         conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')", retorno, numero.TipoTelefono, numero.Telefono));
                     }
@@ -85,10 +86,8 @@ namespace BLL
             bool retorno = false;
             try
             {
-                retorno = conexion.Ejecutar(string.Format("delete from Persona where PersonaId=", this.PersonaId));
-
-                if (retorno)
-                    conexion.Ejecutar("Delete from PersonaTelefono Where PersonaId=" + this.PersonaId.ToString());
+                retorno = conexion.Ejecutar(string.Format("delete from PersonaTelefono where PersonaId={0}" +
+                    "Delete from Persona Where PersonaId= {0}", this.PersonaId));
             }
             catch (Exception ex)
             {
@@ -101,14 +100,21 @@ namespace BLL
         {
 
             DataTable dt = new DataTable();
-
+            DataTable dataTable = new DataTable();
             try
             {
-                dt = conexion.ObtenerDatos(string.Format("select * from Personas where PersonaId=" + IdBuscado));
+                dt = conexion.ObtenerDatos(string.Format("select * from Persona where PersonaId= {0}", IdBuscado));
                 if (dt.Rows.Count > 0)
                 {
                     this.PersonaId = (int)dt.Rows[0]["PersonaId"];
                     this.Nombre = dt.Rows[0]["Nombre"].ToString();
+                    this.Sexo = dt.Rows[0]["Sexo"].ToString();
+
+                    dataTable = conexion.ObtenerDatos(string.Format("select * from PersonaTelefono where PersonaId='{0}'", this.PersonaId));
+                    foreach (DataRow Fila in dataTable.Rows)
+                    {
+                        AgregarTelefono(Fila["TipoTelefono"].ToString(), Fila["Telefono"].ToString());
+                    }
                 }
 
             }

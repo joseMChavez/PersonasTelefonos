@@ -4,60 +4,42 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Persona</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
-     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
     </asp:ContentPlaceHolder>
+     <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet"/>
 </head>
 <body>
 
     <form id="form1" runat="server">
-    <div>
-        <div class=" container">
-            <!--Navbar-->
-<nav class="navbar navbar-dark bg-primary">
+    
+        
+  <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="loginP.aspx">CONTACTAME.COM</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Registrar</a></li>
+                    <li><a href="#">Consultar</a></li>
+                  
+                </ul>
+            </div>
+        </nav>
 
-    <!-- Collapse button-->
-    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx2">
-        <i class="fa fa-bars"></i>
-    </button>
-
-    <div class="container">
-
-        <!--Collapse content-->
-        <div class="collapse navbar-toggleable-xs" id="collapseEx2">
-            <!--Navbar Brand-->
-            <a class="navbar-brand">Navbar</a>
-            <!--Links-->
-            <ul class="nav navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">Pricing</a>
-                </li>
-               
-            </ul>
-            <!--Search form-->
-            <form class="form-inline">
-                <input class="form-control" type="text" placeholder="Search">
-            </form>
-        </div>
-        <!--/.Collapse content-->
-
-    </div>
-
-</nav>
-<!--/.Navbar-->
-        </div>
+      
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
-    </div>
+        <div class="panel panel-default gris">
+                <p class="text-center">JMC-Todos los Derechos Reservados 2016</p>
+            </div>
+   
     </form>
+     <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

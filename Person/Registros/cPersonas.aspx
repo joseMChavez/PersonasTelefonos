@@ -31,8 +31,8 @@
                 <asp:GridView cssClass=" table table-responsive table-bordered table-hover" ID="GridView1" runat="server">
                     <Columns>
                         <asp:HyperLinkField
-                                        DataNavigateUrlFields="Id"
-                                        DataNavigateUrlFormatString="rPersonas.aspx?Id={0}"
+                                        DataNavigateUrlFields="ID"
+                                        DataNavigateUrlFormatString="rPersonas.aspx?ID={0}"
                                         Text="Ver" />
                     </Columns>
                 </asp:GridView>

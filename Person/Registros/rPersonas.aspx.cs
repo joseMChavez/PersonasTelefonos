@@ -16,8 +16,22 @@ namespace Person.Registros
             //ActivarBotones(false);
             TelefonoTexBox.MaxLength = 15;
             DataTable dt = new DataTable();
+            Persona persona = new Persona();
             if (!IsPostBack)
             {
+                if (Request.QueryString["ID"] != null)
+                {
+                    int id = Convert.ToInt32(Request.QueryString["ID"].ToString());
+                    if (persona.Buscar(id))
+                    {
+                        DevolverDatos(persona);
+                        NombreTextBox.Focus();
+                    }
+                    else
+                    {
+                        Utils.MensajeToastr(this, ""+PersonaIdTextBox.Text+" no Existe", "Error", "Warning");
+                    }
+                }
 
                 dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Tipo"), new DataColumn("Numero") });
                 ViewState["Persona"] = dt;
@@ -56,6 +70,8 @@ namespace Person.Registros
         }
         public void DevolverDatos(Persona persona)
         {
+            Limpiar();
+            PersonaIdTextBox.Text=  persona.PersonaId.ToString();
             NombreTextBox.Text = persona.Nombre;
             if (persona.Sexo.Equals("M"))
             {
@@ -104,6 +120,7 @@ namespace Person.Registros
         }
         private void Limpiar()
         {
+            PersonaIdTextBox.Text = string.Empty;
             NombreTextBox.Text = string.Empty;
             MRadio.Checked = false;
             FRadio.Checked = false;
@@ -131,11 +148,13 @@ namespace Person.Registros
             Persona persona = new Persona();
             try
             {
-               
+
+                if (Validar().Equals(false))
+                {
                     CargarDatos(persona);
                     if (persona.Insertar())
                     {
-                       Utils.MensajeToastr(this, "Se Guado con exito", "Exito", "success");
+                        Utils.MensajeToastr(this, "Se Guado con exito", "Exito", "success");
                         Limpiar();
                         NombreTextBox.Focus();
 
@@ -144,8 +163,27 @@ namespace Person.Registros
                     {
                         Utils.MensajeToastr(this, "Error en guardar", "Error", "Error");
                     }
-               
-            }catch(Exception ex)
+                }
+                else
+                {
+                    GuadarButton.Text = "Modificar";
+
+                    if (!string.IsNullOrWhiteSpace(PersonaIdTextBox.Text) && Validar().Equals(false))
+                    {
+                        CargarDatos(persona);
+                        if (persona.Editar())
+                        {
+                            Utils.MensajeToastr(this, "Edicion exitosa", "Exito", "success");
+
+                        }
+                        else
+                        {
+                            Utils.MensajeToastr(this, "Error en Modificar", "Error", "Error");
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
             {
                  Utils.MensajeToastr(this, ex.Message, "Error", "Error");
             }

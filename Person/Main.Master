@@ -22,8 +22,8 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Registrar</a></li>
-                    <li><a href="#">Consultar</a></li>
+                    <li><a href="rPersonas.aspx">Registrar</a></li>
+                    <li><a href="cPersonas.aspx">Consultar</a></li>
                   
                 </ul>
             </div>

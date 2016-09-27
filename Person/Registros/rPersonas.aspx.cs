@@ -150,5 +150,37 @@ namespace Person.Registros
                  Utils.MensajeToastr(this, ex.Message, "Error", "Error");
             }
         }
+
+        protected void EliminarButton_Click(object sender, EventArgs e)
+        {
+            Persona persona = new Persona();
+            
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(PersonaIdTextBox.Text) && Validar().Equals(false))
+                {
+                    if (persona.Eliminar())
+                    {
+                        Utils.MensajeToastr(this, "Se Elimino con exito", "Exito", "success");
+                        Limpiar();
+                        NombreTextBox.Focus();
+                    }
+                    else
+                    {
+                        Utils.MensajeToastr(this, "Error en eliminar", "Error", "Error");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Utils.MensajeToastr(this, ex.Message, "Error", "Error");
+            }
+        }
+
+        protected void ButtonBuscar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("cPersonas.aspx");
+        }
     }
 }

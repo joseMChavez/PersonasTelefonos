@@ -17,7 +17,7 @@
                     </div>
                     
                         <div class="col-md-2 col-xs-8">
-                            <asp:LinkButton CssClass="btn btn-primary btn-sm" ID="ButtonBuscar" runat="server" ><span class="glyphicon glyphicon-search"></span> </asp:LinkButton>
+                            <asp:LinkButton CssClass="btn btn-primary btn-sm" ID="ButtonBuscar" runat="server" OnClick="ButtonBuscar_Click" ><span class="glyphicon glyphicon-search"></span> </asp:LinkButton>
                         </div>
                     
                    
@@ -86,7 +86,7 @@
 
                 <asp:Button Text="Nuevo" class="btn btn-success btn-sm" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
                 <asp:Button Text="Guardar" class="btn btn-info btn-sm" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click"/>
-                <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" />
+                <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" OnClick="EliminarButton_Click" />
 
             </div>
         </div>

@@ -62,18 +62,18 @@
     <Content Include="App_Data\PersonDB_log.ldf">
       <DependentUpon>PersonDB.mdf</DependentUpon>
     </Content>
-    <Content Include="Consultas\cPersonas.aspx" />
+    <Content Include="Registros\cPersonas.aspx" />
     <Content Include="Registros\rPersonas.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Consultas\cPersonas.aspx.cs">
+    <Compile Include="Registros\cPersonas.aspx.cs">
       <DependentUpon>cPersonas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Consultas\cPersonas.aspx.designer.cs">
+    <Compile Include="Registros\cPersonas.aspx.designer.cs">
       <DependentUpon>cPersonas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
@@ -115,6 +115,9 @@
       <Project>{452bc33a-5cf4-4c01-ac16-943cd124b227}</Project>
       <Name>BLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Consultas\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

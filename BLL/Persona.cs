@@ -131,7 +131,7 @@ namespace BLL
             if (!Orden.Equals(""))
                 ordenFinal = " Orden by  " + Orden;
 
-            return conexion.ObtenerDatos("Select " + Campos + " From Personas Where " + Condicion + Orden);
+            return conexion.ObtenerDatos("Select " + Campos + " From Persona as P inner join PersonaTelefono as PT on P.PersonaId=PT.PersonaId Where " + Condicion + Orden);
         }
     }
 }

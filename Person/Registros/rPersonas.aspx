@@ -61,7 +61,9 @@
             
             <%--GridView--%>
             <div class="form-group">
+                <div class=" col-md-8 col-md-3"></div>
                 <div class=" col-md-8 col-md-3">
+
                     <asp:GridView class="table table-bordered table-hover table-hover" ID="TelefonosGridView" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="TelefonosGridView_SelectedIndexChanged">
                         <Columns>
                             <asp:BoundField DataField="Tipo" HeaderText="Tipo" ReadOnly="True" />
@@ -82,8 +84,8 @@
         <div class="text-center">
             <div class="form-group" style="display: inline-block">
 
-                <asp:Button Text="Nuevo" class="btn btn-success btn-sm" runat="server" ID="NuevoButton" />
-                <asp:Button Text="Guardar" class="btn btn-info btn-sm" runat="server" ID="GuadarButton"/>
+                <asp:Button Text="Nuevo" class="btn btn-success btn-sm" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
+                <asp:Button Text="Guardar" class="btn btn-info btn-sm" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click"/>
                 <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" />
 
             </div>

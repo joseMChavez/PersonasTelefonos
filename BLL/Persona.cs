@@ -32,23 +32,22 @@ namespace BLL
         public override bool Insertar()
         {
             int retorno = 0;
-            object identity;
+            
             try
             {
                 //obtengo el identity insertado en la tabla personas
-                identity = conexion.ObtenerValor(
-                    string.Format("Insert Into Persona(Nombre,Sexo) values('{0}','{1}') select @@Identity"
-                    , this.Nombre, this.Sexo));
+                retorno = Convert.ToInt32(conexion.ObtenerValor(string.Format("Insert Into Persona(Nombre,Sexo) values('{0}','{1}'); SELECT SCOPE_IDENTITY()" , this.Nombre, this.Sexo)));
 
-                //intento convertirlo a entero
-                int.TryParse(identity.ToString(), out retorno);
-
-                this.PersonaId = retorno;
-                foreach (PersonaTelefono item in this.TelefonoLista)
+                //  this.PersonaId = retorno;
+                if (retorno > 0)
                 {
-                    conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')",
-                        retorno, item.TipoTelefono, item.Telefono));
+                    foreach (PersonaTelefono item in this.TelefonoLista)
+                    {
+                        conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')",
+                            retorno, item.TipoTelefono, item.Telefono));
+                    }
                 }
+                
 
             }
             catch (Exception ex)

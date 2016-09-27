@@ -13,7 +13,7 @@ namespace Person.Registros
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ActivarBotones(false);
+            //ActivarBotones(false);
             TelefonoTexBox.MaxLength = 15;
             DataTable dt = new DataTable();
             if (!IsPostBack)
@@ -26,7 +26,7 @@ namespace Person.Registros
         public bool Validar()
         {
             bool retorno = false;
-            if (string.IsNullOrWhiteSpace(NombreTextBox.Text) && MRadio.Checked && FRadio.Checked && TelefonosGridView.Rows.Count > 1)
+            if (string.IsNullOrWhiteSpace(NombreTextBox.Text) && (MRadio.Checked || FRadio.Checked) && TelefonosGridView.Rows.Count > 1)
             {
                 retorno = true;
             }
@@ -54,6 +54,30 @@ namespace Person.Registros
                 persona.AgregarTelefono(row.Cells[0].Text, row.Cells[1].Text);
             }
         }
+        public void DevolverDatos(Persona persona)
+        {
+            NombreTextBox.Text = persona.Nombre;
+            if (persona.Sexo.Equals("M"))
+            {
+                MRadio.Checked=true;
+            }
+            else
+            {
+                FRadio.Checked = true;
+            }
+            foreach (var item in persona.TelefonoLista)
+            {
+                DataTable dt = (DataTable)ViewState["Persona"];
+                dt.Rows.Add(item.TipoTelefono, item.Telefono);
+                ViewState["Persona"] = dt;
+                CargarGrid();
+            }
+        }
+        public void CargarGrid()
+        {
+            TelefonosGridView.DataSource = (DataTable)ViewState["Persona"];
+            TelefonosGridView.DataBind();
+        }
         protected void AgregarButton_Click(object sender, EventArgs e)
         {
 
@@ -68,10 +92,9 @@ namespace Person.Registros
                 
                 dt.Rows.Add(fila);
                 ViewState["Persona"] = dt;
-                TelefonosGridView.DataSource = (DataTable)ViewState["Persona"];
-                TelefonosGridView.DataBind();
-                
+                CargarGrid();
                 TelefonoTexBox.Text = string.Empty;
+                ActivarBotones(true);
             }
             catch (Exception ex)
             {
@@ -86,6 +109,10 @@ namespace Person.Registros
             FRadio.Checked = false;
             TipoTelefonoDropDownList.SelectedIndex = 0;
             TelefonoTexBox.Text = string.Empty;
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[2] { new DataColumn("Tipo"), new DataColumn("Numero") });
+            ViewState["Persona"] = dt;
+            CargarGrid();
         }
         protected void TelefonosGridView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -104,21 +131,23 @@ namespace Person.Registros
             Persona persona = new Persona();
             try
             {
-                if (Validar().Equals(false))
-                {
+               
                     CargarDatos(persona);
                     if (persona.Insertar())
                     {
-                        Response.Write("<script>alert('Guardado Correctamente')</script>");
+                       Utils.MensajeToastr(this, "Se Guado con exito", "Exito", "success");
+                        Limpiar();
+                        NombreTextBox.Focus();
+
                     }
                     else
                     {
-                        Response.Write("<script>alert('Error en Guadar!')</script>");
+                        Utils.MensajeToastr(this, "Error en guardar", "Error", "Error");
                     }
-                }
+               
             }catch(Exception ex)
             {
-                throw ex;
+                 Utils.MensajeToastr(this, ex.Message, "Error", "Error");
             }
         }
     }

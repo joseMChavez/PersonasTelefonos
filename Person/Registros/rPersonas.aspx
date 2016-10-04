@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label for="PersonaIdTextBox" class="col-md-3 col-md-3 control-label input-sm">Persona Id: </label>
                     <div class="col-md-1 col-sm-2 col-xs-4">
-                        <asp:TextBox ID="PersonaIdTextBox" runat="server" ReadOnly="True" placeholder="0" class="form-control input-sm"></asp:TextBox>
+                        <asp:TextBox ID="PersonaIdTextBox" runat="server" ReadOnly="True"  CssClass="form-control input-sm"></asp:TextBox>
                     </div>
                     
                         <div class="col-md-2 col-xs-8">
@@ -27,13 +27,13 @@
                 <div class="form-group">
                     <label for="NombreTextBox" class="col-md-3 col-md-3 control-label input-sm">Nombre</label>
                     <div class="col-md-5 col-md-4">
-                        <asp:TextBox ID="NombreTextBox" runat="server" placeholder="Escriba su nombre" Class="form-control input-sm"></asp:TextBox>
+                        <asp:TextBox ID="NombreTextBox" runat="server" placeholder="Escriba su nombre" CssClass="form-control input-sm"></asp:TextBox>
                     </div>
                      <%-- Sexo --%>
                      <label for="MRadio" class="col-md-2 col-md-1 control-label input-sm">Sexo</label>
                     <div class="col-md-2 col-md-2">
-                         <asp:RadioButton CssClass="radio-inline" runat="server" Id="MRadio" value="M" GroupName="Persona" text="M"></asp:RadioButton>
-                         <asp:RadioButton CssClass="radio-inline " runat="server" Id="FRadio" Value="F" GroupName="Persona" text="F"></asp:RadioButton>
+                         <asp:RadioButton CssClass="radio-inline" runat="server" Id="MRadio"  GroupName="Persona" text="M"></asp:RadioButton>
+                         <asp:RadioButton CssClass="radio-inline " runat="server" Id="FRadio"  GroupName="Persona" text="F"></asp:RadioButton>
                       
                     </div>
                 </div>
@@ -50,19 +50,22 @@
                         
                     </div>
                      <%--Telefono--%>
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
                      <label for="TelefonoTexBox" class="col-md-1 control-label input-sm">Telefono</label>
                     <div class="col-md-3">
-                        <asp:TextBox ID="TelefonoTexBox" runat="server" placeholder="Telefono" Class="form-control input-sm"></asp:TextBox>
-                        
+                        <asp:TextBox ID="TelefonoTexBox" runat="server" CssClass="form-control input-sm"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" text="*" ValidationGroup="Agregarbtn" ControlToValidate="TelefonoTexBox" ForeColor="Red" ErrorMessage="Introduz ca un telefono!"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" Text="*" ValidationGroup="Agregarbtn" ErrorMessage="Introduzca un numero valido" ControlToValidate="TelefonoTexBox" BorderStyle="Groove" ValidationExpression="((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}" ForeColor="#CC0000"></asp:RegularExpressionValidator>
                     </div>
-                    <asp:Button ID="AgregarButton" CssClass="btn btn-primary glyphicon glyphicon-phone" runat="server" Text="Agregar" OnClick="AgregarButton_Click"  />
+                    <asp:Button ID="AgregarButton" CssClass="btn btn-primary glyphicon glyphicon-phone" runat="server" Text="Agregar" ValidationGroup="Agregarbtn" OnClick="AgregarButton_Click"  />
                 </div>
                 
             
             <%--GridView--%>
             <div class="form-group">
-                <div class=" col-md-8 col-md-3"></div>
-                <div class=" col-md-8 col-md-3">
+                <div class=" col-md-3 col-md-3"></div>
+                <div class=" col-md-3 col-md-3">
 
                     <asp:GridView class="table table-bordered table-hover table-hover" ID="TelefonosGridView" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="TelefonosGridView_SelectedIndexChanged">
                         <Columns>
@@ -74,6 +77,8 @@
                 </div>
                 
             </div>
+                </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
 
 
@@ -81,16 +86,17 @@
     </div>
     </div>
     <div class="panel-footer">
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
         <div class="text-center">
             <div class="form-group" style="display: inline-block">
 
-                <asp:Button Text="Nuevo" class="btn btn-success btn-sm" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
-                <asp:Button Text="Guardar" class="btn btn-info btn-sm" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click"/>
-                <asp:Button Text="Eliminar" class="btn btn-danger btn-sm" runat="server" ID="EliminarButton" OnClick="EliminarButton_Click" />
+                <asp:Button Text="Nuevo" CssClass="btn btn-success btn-sm" runat="server" ID="NuevoButton" OnClick="NuevoButton_Click" />
+                <asp:Button Text="Guardar" CssClass="btn btn-info btn-sm" runat="server" ID="GuadarButton" OnClick="GuadarButton_Click"/>
+                <asp:Button Text="Eliminar" CssClass="btn btn-danger btn-sm" runat="server" ID="EliminarButton" OnClick="EliminarButton_Click" />
 
             </div>
         </div>
 
     </div>
-   
+   </div>
 </asp:content>

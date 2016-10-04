@@ -9,7 +9,7 @@ namespace BLL
 {
     public static class Utils
     {
-        public static void MensajeToastr(this Page page, string message, string title, string type = "info")
+        public static void MensajeToastr( Page page, string message, string title, string type = "info")
         {
             page.ClientScript.RegisterStartupScript(page.GetType(), "toastr_message",
                   String.Format("toastr.{0}('{1}', '{2}');", type.ToLower(), message, title), addScriptTags: true);

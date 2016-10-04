@@ -96,6 +96,7 @@
     <Compile Include="Registros\rPersonas.aspx.designer.cs">
       <DependentUpon>rPersonas.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Registros\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />

@@ -39,12 +39,12 @@ namespace Person.Registros
         }
         public bool Validar()
         {
-            bool retorno = false;
-            if (string.IsNullOrWhiteSpace(NombreTextBox.Text) && (MRadio.Checked || FRadio.Checked) && TelefonosGridView.Rows.Count > 1)
+           
+            if (!string.IsNullOrWhiteSpace(NombreTextBox.Text) && (MRadio.Checked || FRadio.Checked) && TelefonosGridView.Rows.Count > 0)
             {
-                retorno = true;
-            }
-            return retorno;
+                return true;
+            }else
+                return false;
         }
         public void ActivarBotones(bool ok)
         {
@@ -54,6 +54,8 @@ namespace Person.Registros
         }
         public void CargarDatos(Persona persona)
         {
+            int id = Utils.ConvertirEntero(PersonaIdTextBox.Text);
+            persona.PersonaId=id;
             persona.Nombre = NombreTextBox.Text;
             if (MRadio.Checked)
             {
@@ -149,43 +151,50 @@ namespace Person.Registros
             try
             {
 
-                if (Validar().Equals(false))
+                if (PersonaIdTextBox.Text.Equals(""))
                 {
-                    CargarDatos(persona);
-                    if (persona.Insertar())
+                    if (Validar().Equals(true))
                     {
-                        Utils.MensajeToastr(this, "Se Guado con exito", "Exito", "success");
-                        Limpiar();
-                        NombreTextBox.Focus();
+                        CargarDatos(persona);
+                        if (persona.Insertar())
+                        {
+                            Response.Write("<script>alert('Se Guardo!')</script>");
+                            //Utils.MensajeToastr(this, "Se Guardo con exito", "Exito", "success");
+                            Limpiar();
+                            NombreTextBox.Focus();
 
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('No Guardo')</script>");
+                        }
                     }
-                    else
-                    {
-                        Utils.MensajeToastr(this, "Error en guardar", "Error", "Error");
-                    }
+                    
                 }
                 else
                 {
-                    GuadarButton.Text = "Modificar";
+                    
 
-                    if (!string.IsNullOrWhiteSpace(PersonaIdTextBox.Text) && Validar().Equals(false))
-                    {
+                    
                         CargarDatos(persona);
                         if (persona.Editar())
                         {
-                            Utils.MensajeToastr(this, "Edicion exitosa", "Exito", "success");
+                            //Utils.MensajeToastr(this, "Edicion exitosa", "Exito", "success");
+                            Response.Write("<script>alert(' Modifico')</script>");
+                            Limpiar();
+                            NombreTextBox.Focus();
 
                         }
                         else
                         {
                             Utils.MensajeToastr(this, "Error en Modificar", "Error", "Error");
                         }
-                    }
+                    
                 }
             }
             catch(Exception ex)
             {
-                 Utils.MensajeToastr(this, ex.Message, "Error", "Error");
+                Response.Write("<script>alert('" + ex.Message + "')</script>");
             }
         }
 
@@ -195,11 +204,13 @@ namespace Person.Registros
             
             try
             {
-                if (!string.IsNullOrWhiteSpace(PersonaIdTextBox.Text) && Validar().Equals(false))
+                if (!string.IsNullOrWhiteSpace(PersonaIdTextBox.Text) && Validar().Equals(true))
                 {
+                    CargarDatos(persona);
                     if (persona.Eliminar())
                     {
-                        Utils.MensajeToastr(this, "Se Elimino con exito", "Exito", "success");
+                        Response.Write("<script>alert('Se Elimino!')</script>");
+                        //Utils.MensajeToastr(this, "Se Elimino con exito", "Exito", "success");
                         Limpiar();
                         NombreTextBox.Focus();
                     }
@@ -212,7 +223,7 @@ namespace Person.Registros
             catch (Exception ex)
             {
 
-                Utils.MensajeToastr(this, ex.Message, "Error", "Error");
+                Response.Write("<script>alert('"+ex.Message+"')</script>");
             }
         }
 

@@ -62,10 +62,10 @@ namespace BLL
             bool retorno = false;
             try
             {
-                retorno = conexion.Ejecutar(string.Format("Update Persona set Nombre= '{0}' Sexo= '{1}' where PersonaId=", this.Nombre, this.PersonaId));
+                retorno = conexion.Ejecutar(string.Format("Update Persona set Nombre= '{0}', Sexo= '{1}' where PersonaId={2}", this.Nombre, this.Sexo,this.PersonaId));
                 if (retorno)
                 {
-                    conexion.Ejecutar("Delete from PersonaTelefono Where PersonaId=" + this.PersonaId.ToString());
+                    conexion.Ejecutar(string.Format("Delete from PersonaTelefono Where PersonaId={0}", this.PersonaId));
                     foreach (PersonaTelefono numero in this.TelefonoLista)
                     {
                         conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')", retorno, numero.TipoTelefono, numero.Telefono));
@@ -85,8 +85,8 @@ namespace BLL
             bool retorno = false;
             try
             {
-                retorno = conexion.Ejecutar(string.Format("delete from PersonaTelefono where PersonaId={0}" +
-                    "Delete from Persona Where PersonaId= {0}", this.PersonaId));
+                retorno = conexion.Ejecutar(string.Format("delete from PersonaTelefono where PersonaId={0};"+"delete from Persona Where PersonaId= {0}", this.PersonaId));
+                
             }
             catch (Exception ex)
             {

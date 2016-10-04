@@ -39,7 +39,7 @@
                
             </div>
 
-
+            <hr />
             <div class="panel-footer">
             </div>
         </div>

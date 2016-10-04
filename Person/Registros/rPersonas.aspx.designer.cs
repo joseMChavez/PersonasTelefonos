@@ -58,15 +58,6 @@ namespace Person.Registros {
         protected global::System.Web.UI.WebControls.RadioButton FRadio;
         
         /// <summary>
-        /// TipoTelefonoDropDownList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TipoTelefonoDropDownList;
-        
-        /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace Person.Registros {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// TipoTelefonoDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList TipoTelefonoDropDownList;
         
         /// <summary>
         /// TelefonoTexBox control.

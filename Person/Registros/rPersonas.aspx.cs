@@ -103,12 +103,12 @@ namespace Person.Registros
             try
             {
                 DataTable dt = (DataTable)ViewState["Persona"];
-                DataRow fila;
-                fila = dt.NewRow();
-                fila["Tipo"] = TipoTelefonoDropDownList.SelectedValue;
-                fila["Numero"] = TelefonoTexBox.Text;
+                //DataRow fila;
+                //fila = dt.NewRow();
+                //fila["Tipo"] = TipoTelefonoDropDownList.SelectedValue;
+                //fila["Numero"] = TelefonoTexBox.Text;
                 
-                dt.Rows.Add(fila);
+                dt.Rows.Add(TipoTelefonoDropDownList.SelectedValue, TelefonoTexBox.Text);
                 ViewState["Persona"] = dt;
                 CargarGrid();
                 TelefonoTexBox.Text = string.Empty;

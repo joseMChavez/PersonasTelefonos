@@ -14,7 +14,7 @@ namespace BLL
         public string Sexo { get; set; }
         public List<PersonaTelefono> TelefonoLista { get; set; }
 
-        ConexionDb conexion = new ConexionDb();
+       
         public Persona()
         {
             this.PersonaId = 0;
@@ -32,7 +32,7 @@ namespace BLL
         public override bool Insertar()
         {
             int retorno = 0;
-            
+            ConexionDb conexion = new ConexionDb();
             try
             {
                 //obtengo el identity insertado en la tabla personas
@@ -59,6 +59,7 @@ namespace BLL
         }
         public override bool Editar()
         {
+            ConexionDb conexion = new ConexionDb();
             bool retorno = false;
             try
             {
@@ -68,7 +69,7 @@ namespace BLL
                     conexion.Ejecutar(string.Format("Delete from PersonaTelefono Where PersonaId={0}", this.PersonaId));
                     foreach (PersonaTelefono numero in this.TelefonoLista)
                     {
-                        conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')", retorno, numero.TipoTelefono, numero.Telefono));
+                        conexion.Ejecutar(string.Format("Insert into PersonaTelefono(PersonaId,TipoTelefono,Telefono) Values ({0},'{1}','{2}')",this.PersonaId, numero.TipoTelefono, numero.Telefono));
                     }
                 }
             }
@@ -82,6 +83,7 @@ namespace BLL
         }
         public override bool Eliminar()
         {
+            ConexionDb conexion = new ConexionDb();
             bool retorno = false;
             try
             {
@@ -97,7 +99,7 @@ namespace BLL
         }
         public override bool Buscar(int IdBuscado)
         {
-
+            ConexionDb conexion = new ConexionDb();
             DataTable dt = new DataTable();
             DataTable dataTable = new DataTable();
             try
@@ -127,9 +129,10 @@ namespace BLL
 
         public override DataTable Listado(string Campos, string Condicion, string Orden)
         {
+            ConexionDb conexion = new ConexionDb();
             string ordenFinal = "";
             if (!Orden.Equals(""))
-                ordenFinal = " Orden by  " + Orden;
+                ordenFinal = " Order by  " + Orden;
 
             return conexion.ObtenerDatos("Select " + Campos + " From Persona as P inner join PersonaTelefono as PT on P.PersonaId=PT.PersonaId Where " + Condicion + Orden);
         }
